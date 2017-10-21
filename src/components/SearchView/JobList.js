@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const JobList = ({ jobs }) => (
+const JobList = ({ jobs, handleSelect }) => (
   <List containerStyle={styles.container}>
     {
       jobs.map((item) => {
@@ -29,7 +29,7 @@ const JobList = ({ jobs }) => (
             subtitle={company}
             leftIcon={logo ? null : { name: 'work' }}
             avatar={logo ? { uri: logo } : null}
-            onPress={() => {}}
+            onPress={() => handleSelect(item)}
           />
         );
       })
@@ -39,6 +39,7 @@ const JobList = ({ jobs }) => (
 
 JobList.propTypes = {
   jobs: PropTypes.array.isRequired,
+  handleSelect: PropTypes.func.isRequired,
 };
 
 export default JobList;
