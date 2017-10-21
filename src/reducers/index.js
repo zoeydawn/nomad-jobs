@@ -1,7 +1,14 @@
 import { combineReducers } from 'redux';
 
-const sampleReducer = (state = 0) => state;
+function jobReducer(state = [], action) {
+  switch (action.type) {
+    case 'FETCH_JOBS':
+      return action.payload;
+    default:
+      return state;
+  }
+}
 
 export default combineReducers({
-  zero: sampleReducer,
+  jobs: jobReducer,
 });
