@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SearchBar } from 'react-native-elements';
+import GiftedSpinner from 'react-native-gifted-spinner';
 
 import { requestJobs } from '../actions';
 
@@ -25,6 +26,11 @@ const styles = StyleSheet.create({
   searchIcon: {
     paddingTop: 35,
   },
+  spinnerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
 
 class Layout extends React.Component {
@@ -33,6 +39,14 @@ class Layout extends React.Component {
   }
 
   render() {
+    const { jobs } = this.props;
+    // if (!jobs.length) {
+    //   return (
+    //     <View style={styles.spinnerContainer}>
+    //       <GiftedSpinner />
+    //     </View>
+    //   )
+    // }
     return (
       <View style={styles.container}>
         <SearchBar
@@ -43,10 +57,17 @@ class Layout extends React.Component {
           onChangeText={() => {}}
           placeholder="Search remote jobs..."
         />
-        {/* <Text>Open up src to start working on your app!!!!!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text> */}
-        
+        {
+          jobs.length ?
+            <Text>jobs</Text> :
+            <View style={styles.spinnerContainer}>
+              <GiftedSpinner />
+            </View>
+        }
+        {/* <View style={styles.spinnerContainer}>
+          <GiftedSpinner />
+        </View> */}
+
       </View>
     );
   }
