@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SearchBar } from 'react-native-elements';
@@ -14,9 +14,6 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    // justifyContent: 'center',
   },
   searchInput: {
     width: width - 15,
@@ -29,6 +26,7 @@ const styles = StyleSheet.create({
     paddingTop: 35,
   },
   spinnerContainer: {
+    height: 500,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
@@ -44,7 +42,10 @@ class Layout extends React.Component {
     const { jobs } = this.props;
 
     return (
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator={false}
+      >
         <SearchBar
           round
           icon={{ style: styles.searchIcon }}
@@ -60,7 +61,7 @@ class Layout extends React.Component {
               <GiftedSpinner />
             </View>
         }
-      </View>
+      </ScrollView>
     );
   }
 }
