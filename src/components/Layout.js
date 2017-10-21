@@ -1,9 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SearchBar } from 'react-native-elements';
 import GiftedSpinner from 'react-native-gifted-spinner';
+
+import JobList from './JobList';
 
 import { requestJobs } from '../actions';
 
@@ -40,13 +42,7 @@ class Layout extends React.Component {
 
   render() {
     const { jobs } = this.props;
-    // if (!jobs.length) {
-    //   return (
-    //     <View style={styles.spinnerContainer}>
-    //       <GiftedSpinner />
-    //     </View>
-    //   )
-    // }
+
     return (
       <View style={styles.container}>
         <SearchBar
@@ -59,15 +55,11 @@ class Layout extends React.Component {
         />
         {
           jobs.length ?
-            <Text>jobs</Text> :
+            <JobList jobs={jobs} /> :
             <View style={styles.spinnerContainer}>
               <GiftedSpinner />
             </View>
         }
-        {/* <View style={styles.spinnerContainer}>
-          <GiftedSpinner />
-        </View> */}
-
       </View>
     );
   }
