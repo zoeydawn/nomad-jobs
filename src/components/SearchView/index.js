@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   searchInput: {
-    width: width - 15,
+    width: width - 100,
   },
   searchContainer: {
     // paddingTop: 5,
@@ -42,15 +42,22 @@ const styles = StyleSheet.create({
   },
   badge: {
     flexWrap: 'wrap',
-    // marginRight: 3,
-    // marginTop: 5,
+  },
+  searchButton: {
+    width: 75,
+    position: 'absolute',
+    right: 5,
+    top: -35,
   },
 });
+
+const searchItems = ['', 'dev', 'design', 'non tech'];
 
 class Layout extends React.Component {
   state = {
     loading: true,
     searchQuery: '',
+    search: '',
   }
 
   componentWillMount() {
@@ -74,14 +81,13 @@ class Layout extends React.Component {
     this.props.requestJobs(searchQuery);
   }
 
-  handleButtonPress = (index) => {
-    const searchItems = ['', 'dev', 'design', 'non tech'];
-    this.handleSearch(searchItems[index]);
+  handleType = (search) => {
+    this.setState({ search });
   }
 
   render() {
     const { jobs } = this.props;
-    const { loading, searchQuery } = this.state;
+    const { loading, searchQuery, search } = this.state;
     const buttons = ['all jobs', 'dev jobs', 'UI/UX', 'non-tech'];
 
     return (
@@ -94,12 +100,18 @@ class Layout extends React.Component {
           icon={{ style: styles.searchIcon }}
           containerStyle={styles.searchContainer}
           inputStyle={styles.searchInput}
-          onChangeText={() => {}}
+          showLoadingIcon={false}
+          onChangeText={this.handleType}
           placeholder="Search remote jobs..."
         />
+        <Badge
+          value="search"
+          containerStyle={styles.searchButton}
+          onPress={() => this.handleSearch(search)}
+        />
         <ButtonGroup
-          onPress={this.handleButtonPress}
-          selectedIndex={0}
+          onPress={index => this.handleSearch(searchItems[index])}
+          selectedIndex={searchItems.indexOf(searchQuery)}
           buttons={buttons}
         />
         {
