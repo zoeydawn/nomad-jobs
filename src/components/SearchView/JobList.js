@@ -11,6 +11,12 @@ const styles = StyleSheet.create({
   },
 });
 
+function getIcon(tags) {
+  return tags.indexOf('dev') > -1 ?
+    { name: 'code' } :
+    { name: 'work' };
+}
+
 const JobList = ({ jobs, handleSelect }) => (
   <List containerStyle={styles.container}>
     {
@@ -20,6 +26,7 @@ const JobList = ({ jobs, handleSelect }) => (
           position,
           logo,
           company,
+          tags,
         } = post;
 
         return (
@@ -27,7 +34,7 @@ const JobList = ({ jobs, handleSelect }) => (
             key={id}
             title={position}
             subtitle={company}
-            leftIcon={logo ? null : { name: 'work' }}
+            leftIcon={logo ? null : getIcon(tags)}
             avatar={logo ? { uri: logo } : null}
             onPress={() => handleSelect(post)}
           />
