@@ -3,6 +3,7 @@ import { get } from 'axios';
 export function noop() { console.log('nothin'); }
 
 function fetchJobs(data) {
+  // console.log('data:', data);
   return {
     type: 'FETCH_JOBS',
     payload: data,

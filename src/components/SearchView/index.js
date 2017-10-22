@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, View, ScrollView, Dimensions, Text } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, ButtonGroup, Badge } from 'react-native-elements';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
 import JobList from './JobList';
@@ -19,11 +19,11 @@ const styles = StyleSheet.create({
     width: width - 15,
   },
   searchContainer: {
-    paddingTop: 35,
-    paddingBottom: 5,
+    // paddingTop: 5,
+    // paddingBottom: 5,
   },
   searchIcon: {
-    paddingTop: 35,
+    // paddingTop: 5,
   },
   spinnerContainer: {
     height: 500,
@@ -31,19 +31,58 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  filterContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    // justifyContent: 'center',
+    alignItems: 'center',
+    paddingLeft: 12,
+    paddingTop: 12,
+  },
+  badge: {
+    flexWrap: 'wrap',
+    // marginRight: 3,
+    // marginTop: 5,
+  },
 });
 
 class Layout extends React.Component {
+  state = {
+    loading: true,
+    searchQuery: '',
+  }
+
   componentWillMount() {
     this.props.requestJobs();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { jobs } = nextProps;
+    if (this.props.jobs !== jobs) {
+      this.setState({ loading: false });
+    }
   }
 
   handleSelect = (post) => {
     this.props.navigation.navigate('Post', { post });
   }
 
+  handleSearch = (query) => {
+    this.setState({ loading: true, searchQuery: query });
+    const searchQuery = query ? `-${query.replace(' ', '-')}-` : '-';
+    this.props.requestJobs(searchQuery);
+  }
+
+  handleButtonPress = (index) => {
+    const searchItems = ['', 'dev', 'design', 'non tech'];
+    this.handleSearch(searchItems[index]);
+  }
+
   render() {
     const { jobs } = this.props;
+    const { loading, searchQuery } = this.state;
+    const buttons = ['all jobs', 'dev jobs', 'UI/UX', 'non-tech'];
 
     return (
       <ScrollView
@@ -58,8 +97,20 @@ class Layout extends React.Component {
           onChangeText={() => {}}
           placeholder="Search remote jobs..."
         />
+        <ButtonGroup
+          onPress={this.handleButtonPress}
+          selectedIndex={0}
+          buttons={buttons}
+        />
         {
-          jobs.length ?
+          !!searchQuery &&
+          <View style={styles.filterContainer}>
+            <Text>filters: </Text>
+            <Badge containerStyle={styles.badge} value={searchQuery} />
+          </View>
+        }
+        {
+          !loading ?
             <JobList jobs={jobs} handleSelect={this.handleSelect} /> :
             <View style={styles.spinnerContainer}>
               <GiftedSpinner />
@@ -81,8 +132,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  requestJobs() {
-    dispatch(requestJobs());
+  requestJobs(query) {
+    dispatch(requestJobs(query));
   },
 });
 
