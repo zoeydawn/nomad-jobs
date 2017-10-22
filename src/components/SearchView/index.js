@@ -18,13 +18,8 @@ const styles = StyleSheet.create({
   searchInput: {
     width: width - 100,
   },
-  searchContainer: {
-    // paddingTop: 5,
-    // paddingBottom: 5,
-  },
-  searchIcon: {
-    // paddingTop: 5,
-  },
+  searchContainer: {},
+  searchIcon: {},
   spinnerContainer: {
     height: 500,
     flex: 1,
@@ -35,7 +30,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    // justifyContent: 'center',
     alignItems: 'center',
     paddingLeft: 12,
     paddingTop: 12,
@@ -48,6 +42,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 5,
     top: -35,
+  },
+  noMatches: {
+    paddingLeft: 12,
+    paddingTop: 12,
   },
 });
 
@@ -122,11 +120,14 @@ class Layout extends React.Component {
           </View>
         }
         {
-          !loading ?
-            <JobList jobs={jobs} handleSelect={this.handleSelect} /> :
+          loading ?
             <View style={styles.spinnerContainer}>
               <GiftedSpinner />
             </View>
+            :
+            jobs.length ?
+              <JobList jobs={jobs} handleSelect={this.handleSelect} /> :
+              <Text style={styles.noMatches}>no matches found</Text>
         }
       </ScrollView>
     );
