@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
 const JobList = ({ jobs, handleSelect }) => (
   <List containerStyle={styles.container}>
     {
-      jobs.map((item) => {
+      jobs.map((post) => {
         const {
           id,
           position,
           logo,
           company,
-        } = item;
+        } = post;
 
         return (
           <ListItem
@@ -29,7 +29,7 @@ const JobList = ({ jobs, handleSelect }) => (
             subtitle={company}
             leftIcon={logo ? null : { name: 'work' }}
             avatar={logo ? { uri: logo } : null}
-            onPress={() => handleSelect(item)}
+            onPress={() => handleSelect(post)}
           />
         );
       })
