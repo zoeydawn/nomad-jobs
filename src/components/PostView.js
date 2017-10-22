@@ -4,12 +4,11 @@ import {
   StyleSheet,
   View,
   ScrollView,
-  // Dimensions,
+  TouchableHighlight,
+  Text as NativeText,
 } from 'react-native';
 import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
-
-// const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -35,6 +34,14 @@ const styles = StyleSheet.create({
   buttonContainer: {
     paddingBottom: 100,
   },
+  link: {
+    marginTop: 15,
+  },
+  linkText: {
+    color: 'blue',
+    textAlign: 'center',
+    fontSize: 12,
+  },
 });
 
 const PostView = ({ navigation }) => {
@@ -50,7 +57,8 @@ const PostView = ({ navigation }) => {
     description,
     position,
     tags,
-    // url
+    url,
+    id,
   } = navigation.state.params.post;
 
   return (
@@ -72,7 +80,14 @@ const PostView = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <Button
           title="APPLY NOW"
+          onPress={() => navigation.navigate('Web', { url: `https://remoteok.io/l/${id}` })}
         />
+        <TouchableHighlight
+          style={styles.link}
+          onPress={() => navigation.navigate('Web', { url })}
+        >
+          <NativeText style={styles.linkText}>view on remoteOK.io</NativeText>
+        </TouchableHighlight>
       </View>
     </ScrollView>
   );
