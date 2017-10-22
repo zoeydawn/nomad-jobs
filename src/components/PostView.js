@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, View, ScrollView, Dimensions } from 'react-native';
-import { Avatar, Badge, Text } from 'react-native-elements';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  // Dimensions,
+} from 'react-native';
+import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
 
-const { width } = Dimensions.get('window');
+// const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -21,18 +26,18 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    // width,
   },
   badge: {
     flexWrap: 'wrap',
     marginRight: 3,
     marginTop: 5,
   },
+  buttonContainer: {
+    paddingBottom: 100,
+  },
 });
 
 const PostView = ({ navigation }) => {
-  // console.log('props:', props);
-  // console.log('props.navigation.state.params.post:', navigation.state.params.post);
   if (!navigation.state.params.post) {
     return (
       <Text>error</Text>
@@ -45,7 +50,7 @@ const PostView = ({ navigation }) => {
     description,
     position,
     tags,
-    url
+    // url
   } = navigation.state.params.post;
 
   return (
@@ -63,8 +68,12 @@ const PostView = ({ navigation }) => {
           ))
         }
       </View>
-
       <Text style={styles.description}>{description}</Text>
+      <View style={styles.buttonContainer}>
+        <Button
+          title="APPLY NOW"
+        />
+      </View>
     </ScrollView>
   );
 };

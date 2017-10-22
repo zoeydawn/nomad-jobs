@@ -9,6 +9,7 @@
     "prefer-default-export": 0,
     "prop-types": 0,
     "class-methods-use-this": "off",
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "react/no-array-index-key": "off"
   }
 }
