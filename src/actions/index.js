@@ -1,10 +1,15 @@
 import { get } from 'axios';
 
-export function noop() { console.log('nothin'); }
-
 function fetchJobs(data) {
   return {
     type: 'FETCH_JOBS',
+    payload: data,
+  };
+}
+
+function toggleLoad(data) {
+  return {
+    type: 'TOGGLE_LOADING',
     payload: data,
   };
 }
@@ -17,5 +22,11 @@ export function requestJobs(query) {
         dispatch(fetchJobs({ jobs: res.data, query }));
       })
       .catch(error => console.error('error fetching jobs': error));
+  };
+}
+
+export function toggleLoading(bool) {
+  return (dispatch) => {
+    dispatch(toggleLoad(bool));
   };
 }

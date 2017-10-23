@@ -11,7 +11,7 @@ import {
 import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
 
-import { requestJobs } from '../actions';
+import { requestJobs, toggleLoading } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -111,6 +111,7 @@ PostView.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   handleSearch(query) {
+    dispatch(toggleLoading(true));
     dispatch(requestJobs(query));
   },
 });

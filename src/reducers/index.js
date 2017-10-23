@@ -9,6 +9,16 @@ function searchReducer(state = { jobs: [], query: '' }, action) {
   }
 }
 
+function loadingReducer(state = true, action) {
+  switch (action.type) {
+    case 'TOGGLE_LOADING':
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 export default combineReducers({
   searchResults: searchReducer,
+  loading: loadingReducer,
 });

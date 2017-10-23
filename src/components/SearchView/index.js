@@ -7,7 +7,7 @@ import GiftedSpinner from 'react-native-gifted-spinner';
 
 import JobList from './JobList';
 
-import { requestJobs } from '../../actions';
+import { requestJobs, toggleLoading } from '../../actions';
 
 const { width } = Dimensions.get('window');
 
@@ -56,7 +56,6 @@ const searchItems = ['', 'dev', 'design', 'non tech'];
 
 class Layout extends React.Component {
   state = {
-    loading: true,
     search: '',
   }
 
@@ -67,7 +66,7 @@ class Layout extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { searchResults } = nextProps;
     if (this.props.searchResults !== searchResults) {
-      this.setState({ loading: false });
+      this.props.toggleLoading(false);
     }
   }
 
@@ -76,7 +75,6 @@ class Layout extends React.Component {
   }
 
   handleSearch = (query) => {
-    this.setState({ loading: true });
     this.props.requestJobs(query);
   }
 
@@ -85,9 +83,9 @@ class Layout extends React.Component {
   }
 
   render() {
-    const { searchResults } = this.props;
+    const { searchResults, loading } = this.props;
     const { jobs, query = '' } = searchResults;
-    const { loading, search } = this.state;
+    const { search } = this.state;
     const buttons = ['all jobs', 'dev jobs', 'design/UX', 'non-tech'];
 
     return (
@@ -140,17 +138,24 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   requestJobs: PropTypes.func.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
   searchResults: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   searchResults: state.searchResults,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
   requestJobs(query) {
+    dispatch(toggleLoading(true));
     dispatch(requestJobs(query));
+  },
+  toggleLoading(bool) {
+    dispatch(toggleLoading(bool));
   },
 });
 
