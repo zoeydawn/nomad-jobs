@@ -1,15 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, Dimensions } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
-
-const { width } = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  container: {
-    width,
-  },
-});
 
 function getIcon(tags) {
   return tags.indexOf('dev') > -1 ?
@@ -17,8 +8,8 @@ function getIcon(tags) {
     { name: 'work' };
 }
 
-const JobList = ({ jobs, handleSelect }) => (
-  <List containerStyle={styles.container}>
+const JobList = ({ jobs, handleSelect, width }) => (
+  <List containerStyle={{ width }}>
     {
       jobs.map((post) => {
         const {
@@ -47,6 +38,7 @@ const JobList = ({ jobs, handleSelect }) => (
 JobList.propTypes = {
   jobs: PropTypes.array.isRequired,
   handleSelect: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 export default JobList;

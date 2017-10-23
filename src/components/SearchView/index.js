@@ -9,14 +9,9 @@ import JobList from './JobList';
 
 import { requestJobs, toggleLoading } from '../../actions';
 
-const { width } = Dimensions.get('window');
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  searchInput: {
-    width: width - 100,
   },
   searchContainer: {},
   searchIcon: {},
@@ -57,6 +52,7 @@ const searchItems = ['', 'dev', 'design', 'non tech'];
 class Layout extends React.Component {
   state = {
     search: '',
+    width: Dimensions.get('window').width,
   }
 
   componentWillMount() {
@@ -68,6 +64,11 @@ class Layout extends React.Component {
     if (this.props.searchResults !== searchResults) {
       this.props.toggleLoading(false);
     }
+  }
+
+  onLayout = () => {
+    const { width } = Dimensions.get('window');
+    this.setState({ width });
   }
 
   handleSelect = (post) => {
@@ -85,19 +86,20 @@ class Layout extends React.Component {
   render() {
     const { searchResults, loading } = this.props;
     const { jobs, query = '' } = searchResults;
-    const { search } = this.state;
+    const { search, width } = this.state;
     const buttons = ['all jobs', 'dev jobs', 'design/UX', 'non-tech'];
 
     return (
       <ScrollView
         style={styles.container}
         showsVerticalScrollIndicator={false}
+        onLayout={this.onLayout}
       >
         <SearchBar
           round
           icon={{ style: styles.searchIcon }}
           containerStyle={styles.searchContainer}
-          inputStyle={styles.searchInput}
+          inputStyle={{ width: width - 100 }}
           showLoadingIcon={false}
           onChangeText={this.handleType}
           placeholder="Search remote jobs..."
@@ -128,6 +130,7 @@ class Layout extends React.Component {
               <JobList
                 jobs={jobs}
                 handleSelect={this.handleSelect}
+                width={width}
               /> :
               <Text style={styles.noMatches}>no matches found</Text>
         }
