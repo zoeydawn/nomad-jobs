@@ -77,7 +77,6 @@ class Layout extends React.Component {
 
   handleSearch = (query) => {
     this.setState({ loading: true });
-    // const searchQuery = query ? `-${query.replace(' ', '-')}-` : '-';
     this.props.requestJobs(query);
   }
 
@@ -90,8 +89,7 @@ class Layout extends React.Component {
     const { jobs, query = '' } = searchResults;
     const { loading, search } = this.state;
     const buttons = ['all jobs', 'dev jobs', 'design/UX', 'non-tech'];
-    // const searchQuery = query
-    // console.log('searchResults:', Object.keys(searchResults));
+
     return (
       <ScrollView
         style={styles.container}
