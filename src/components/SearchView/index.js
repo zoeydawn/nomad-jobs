@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  filterContainer: {
+  resultsContainer: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
   noMatches: {
     paddingLeft: 12,
     paddingTop: 12,
+  },
+  results: {
+    fontWeight: '500',
   },
 });
 
@@ -86,7 +89,7 @@ class Layout extends React.Component {
   render() {
     const { jobs } = this.props;
     const { loading, searchQuery, search } = this.state;
-    const buttons = ['all jobs', 'dev jobs', 'UI/UX', 'non-tech'];
+    const buttons = ['all jobs', 'dev jobs', 'design/UX', 'non-tech'];
 
     return (
       <ScrollView
@@ -113,10 +116,9 @@ class Layout extends React.Component {
           buttons={buttons}
         />
         {
-          !!searchQuery &&
-          <View style={styles.filterContainer}>
-            <Text>filters: </Text>
-            <Badge containerStyle={styles.badge} value={searchQuery} />
+          !loading && !!jobs.length &&
+          <View style={styles.resultsContainer}>
+            <Text style={styles.results}>{`${jobs.length} remote ${searchQuery} jobs:`}</Text>
           </View>
         }
         {
