@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   searchContainer: {},
   searchIcon: {},
   spinnerContainer: {
-    height: 500,
+    height: 200,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
