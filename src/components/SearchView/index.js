@@ -147,6 +147,10 @@ Layout.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
+Layout.navigationOptions = {
+  title: 'Nomad Jobs',
+};
+
 const mapStateToProps = state => ({
   searchResults: state.searchResults,
   loading: state.loading,

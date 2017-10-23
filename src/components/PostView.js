@@ -109,6 +109,10 @@ PostView.propTypes = {
   handleSearch: PropTypes.func.isRequired,
 };
 
+PostView.navigationOptions = ({ navigation }) => ({
+  title: navigation.state.params.post.position,
+});
+
 const mapDispatchToProps = dispatch => ({
   handleSearch(query) {
     dispatch(toggleLoading(true));
