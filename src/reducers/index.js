@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-function jobReducer(state = [], action) {
+function searchReducer(state = { jobs: [], query: '' }, action) {
   switch (action.type) {
     case 'FETCH_JOBS':
       return action.payload;
@@ -10,5 +10,5 @@ function jobReducer(state = [], action) {
 }
 
 export default combineReducers({
-  jobs: jobReducer,
+  searchResults: searchReducer,
 });

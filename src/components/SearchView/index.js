@@ -57,7 +57,6 @@ const searchItems = ['', 'dev', 'design', 'non tech'];
 class Layout extends React.Component {
   state = {
     loading: true,
-    searchQuery: '',
     search: '',
   }
 
@@ -66,20 +65,20 @@ class Layout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { jobs } = nextProps;
-    if (this.props.jobs !== jobs) {
+    const { searchResults } = nextProps;
+    if (this.props.searchResults !== searchResults) {
       this.setState({ loading: false });
     }
   }
 
   handleSelect = (post) => {
-    this.props.navigation.navigate('Post', { post });
+    this.props.navigation.navigate('Post', { post, search: this.handleSearch });
   }
 
   handleSearch = (query) => {
-    this.setState({ loading: true, searchQuery: query });
-    const searchQuery = query ? `-${query.replace(' ', '-')}-` : '-';
-    this.props.requestJobs(searchQuery);
+    this.setState({ loading: true });
+    // const searchQuery = query ? `-${query.replace(' ', '-')}-` : '-';
+    this.props.requestJobs(query);
   }
 
   handleType = (search) => {
@@ -87,10 +86,12 @@ class Layout extends React.Component {
   }
 
   render() {
-    const { jobs } = this.props;
-    const { loading, searchQuery, search } = this.state;
+    const { searchResults } = this.props;
+    const { jobs, query = '' } = searchResults;
+    const { loading, search } = this.state;
     const buttons = ['all jobs', 'dev jobs', 'design/UX', 'non-tech'];
-
+    // const searchQuery = query
+    // console.log('searchResults:', Object.keys(searchResults));
     return (
       <ScrollView
         style={styles.container}
@@ -112,13 +113,13 @@ class Layout extends React.Component {
         />
         <ButtonGroup
           onPress={index => this.handleSearch(searchItems[index])}
-          selectedIndex={searchItems.indexOf(searchQuery)}
+          selectedIndex={searchItems.indexOf(query)}
           buttons={buttons}
         />
         {
           !loading && !!jobs.length &&
           <View style={styles.resultsContainer}>
-            <Text style={styles.results}>{`${jobs.length} remote ${searchQuery} jobs:`}</Text>
+            <Text style={styles.results}>{`${jobs.length} remote ${query} jobs:`}</Text>
           </View>
         }
         {
@@ -128,7 +129,10 @@ class Layout extends React.Component {
             </View>
             :
             jobs.length ?
-              <JobList jobs={jobs} handleSelect={this.handleSelect} /> :
+              <JobList
+                jobs={jobs}
+                handleSelect={this.handleSelect}
+              /> :
               <Text style={styles.noMatches}>no matches found</Text>
         }
       </ScrollView>
@@ -138,12 +142,12 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   requestJobs: PropTypes.func.isRequired,
-  jobs: PropTypes.array.isRequired,
+  searchResults: PropTypes.object.isRequired,
   navigation: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  jobs: state.jobs,
+  searchResults: state.searchResults,
 });
 
 const mapDispatchToProps = dispatch => ({

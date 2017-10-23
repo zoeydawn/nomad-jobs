@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -9,6 +10,8 @@ import {
 } from 'react-native';
 import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
+
+import { requestJobs } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PostView = ({ navigation }) => {
+const PostView = ({ navigation, handleSearch }) => {
   if (!navigation.state.params.post) {
     return (
       <Text>error</Text>
@@ -72,7 +75,15 @@ const PostView = ({ navigation }) => {
       <View style={styles.tagContainer}>
         {
           tags.map((tag, i) => (
-            <Badge containerStyle={styles.badge} value={tag} key={`tag-${i}-${tag}`} />
+            <Badge
+              containerStyle={styles.badge}
+              value={tag}
+              key={`tag-${i}-${tag}`}
+              onPress={() => {
+                handleSearch(tag);
+                navigation.goBack();
+              }}
+            />
           ))
         }
       </View>
@@ -95,6 +106,13 @@ const PostView = ({ navigation }) => {
 
 PostView.propTypes = {
   navigation: PropTypes.object.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 };
 
-export default PostView;
+const mapDispatchToProps = dispatch => ({
+  handleSearch(query) {
+    dispatch(requestJobs(query));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(PostView);
