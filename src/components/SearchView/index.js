@@ -110,7 +110,8 @@ class Layout extends React.Component {
           onPress={() => this.handleSearch(search)}
         />
         <ButtonGroup
-          onPress={index => this.handleSearch(searchItems[index])}
+          // onPress={index => this.handleSearch(searchItems[index])}
+          onPress={() => this.props.navigation.navigate('Menu')}
           selectedIndex={searchItems.indexOf(query)}
           buttons={buttons}
         />
