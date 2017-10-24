@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
-import { SideMenu } from 'react-native-elements';
+import SideMenu from 'react-native-side-menu';
 
 import SearchView from './SearchView';
 
@@ -43,10 +43,10 @@ export default class Menu extends React.Component {
   }
 }
 
-SearchView.propTypes = {
+Menu.propTypes = {
   navigation: PropTypes.object.isRequired,
 };
 
-SearchView.navigationOptions = {
+Menu.navigationOptions = {
   title: 'Nomad Jobs',
 };

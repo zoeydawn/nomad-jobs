@@ -108,11 +108,9 @@ class SearchView extends React.Component {
         <Badge
           value="search"
           containerStyle={styles.searchButton}
-          // onPress={() => this.handleSearch(search)}
-          onPress={toggleSideMenu}
+          onPress={() => this.handleSearch(search)}
         />
         <ButtonGroup
-          // onPress={toggleSideMenu}
           onPress={index => this.handleSearch(searchItems[index])}
           selectedIndex={searchItems.indexOf(query)}
           buttons={buttons}
