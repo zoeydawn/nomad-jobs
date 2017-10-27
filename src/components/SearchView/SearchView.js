@@ -12,7 +12,7 @@ import { requestJobs, toggleLoading } from '../../actions';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#999999',
+    backgroundColor: '#ededed',
   },
   searchContainer: {},
   searchIcon: {},
@@ -46,9 +46,13 @@ const styles = StyleSheet.create({
   results: {
     fontWeight: '500',
   },
+  buttonText: {
+    fontSize: 10,
+    textAlign: 'center',
+  },
 });
 
-const searchItems = ['', 'dev', 'design', 'non tech'];
+const searchItems = ['', 'dev', 'support', 'marketing', 'design'];
 
 class SearchView extends React.Component {
   state = {
@@ -88,7 +92,7 @@ class SearchView extends React.Component {
     const { searchResults, loading, toggleSideMenu } = this.props;
     const { jobs, query = '' } = searchResults;
     const { search, width } = this.state;
-    const buttons = ['all jobs', 'dev jobs', 'design/UX', 'non-tech'];
+    const buttons = ['all jobs', 'software development', 'customer support', 'marketing', 'design & UI'];
 
     return (
       <ScrollView
@@ -114,6 +118,7 @@ class SearchView extends React.Component {
           onPress={index => this.handleSearch(searchItems[index])}
           selectedIndex={searchItems.indexOf(query)}
           buttons={buttons}
+          textStyle={styles.buttonText}
         />
         {
           !loading && !!jobs.length &&
