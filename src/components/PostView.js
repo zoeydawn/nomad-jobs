@@ -12,6 +12,7 @@ import {
 import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
 import HTMLView from 'react-native-htmlview';
+import Markdown from 'react-native-simple-markdown';
 
 import Footer from './Footer';
 
@@ -69,6 +70,8 @@ const PostView = ({ navigation, handleSearch }) => {
     id,
   } = navigation.state.params.post;
 
+  const isHtml = /<[a-z][\s\S]*>/i.test(description);
+
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
@@ -94,20 +97,27 @@ const PostView = ({ navigation, handleSearch }) => {
       </View>
 
       <View style={styles.description}>
-        <HTMLView
-          value={description}
-          stylesheet={styles}
-          onLinkPress={
-            (linkAddress) => {
-              if (linkAddress.indexOf('@') === -1) {
-                navigation.navigate('Web', { url: linkAddress });
-              } else {
-                Linking.openURL(linkAddress)
-                  .catch(err => console.error('An opening email client', err));
+        {
+          isHtml ?
+            <HTMLView
+              value={description}
+              stylesheet={styles}
+              onLinkPress={
+                (linkAddress) => {
+                  if (linkAddress.indexOf('@') === -1) {
+                    navigation.navigate('Web', { url: linkAddress });
+                  } else {
+                    Linking.openURL(linkAddress)
+                    .catch(err => console.error('An opening email client', err));
+                  }
+                }
               }
-            }
-          }
-        />
+            />
+          :
+            <Markdown>
+              {description}
+            </Markdown>
+        }
       </View>
 
       <View style={styles.buttonContainer}>
