@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ScrollView, Dimensions, Text } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { SearchBar, ButtonGroup, Badge } from 'react-native-elements';
+import { SearchBar, ButtonGroup, Button } from 'react-native-elements';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
 import JobList from './JobList';
@@ -29,14 +29,9 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
     paddingTop: 12,
   },
-  badge: {
-    flexWrap: 'wrap',
-  },
   searchButton: {
-    width: 75,
-    position: 'absolute',
-    right: 5,
-    top: -35,
+    height: 35,
+    margin: 0,
   },
   noMatches: {
     paddingLeft: 12,
@@ -81,6 +76,7 @@ class Layout extends React.Component {
 
   handleSearch = (query) => {
     this.props.requestJobs(query);
+    this.setState({ search: '' });
   }
 
   handleType = (search) => {
@@ -91,7 +87,13 @@ class Layout extends React.Component {
     const { searchResults, loading } = this.props;
     const { jobs, query = '' } = searchResults;
     const { search, width } = this.state;
-    const buttons = ['all jobs', 'software development', 'customer support', 'marketing', 'design & UI'];
+    const buttons = [
+      'all jobs',
+      'software development',
+      'customer support',
+      'marketing',
+      'design & UI',
+    ];
 
     return (
       <ScrollView
@@ -103,16 +105,19 @@ class Layout extends React.Component {
           round
           icon={{ style: styles.searchIcon }}
           containerStyle={styles.searchContainer}
-          inputStyle={{ width: width - 100 }}
           showLoadingIcon={false}
           onChangeText={this.handleType}
           placeholder="Search remote jobs..."
         />
-        <Badge
-          value="search"
-          containerStyle={styles.searchButton}
-          onPress={() => this.handleSearch(search)}
-        />
+
+        {!!search &&
+          <Button
+            title="search"
+            icon={{ name: 'search', type: 'font-awesome' }}
+            buttonStyle={styles.searchButton}
+            containerViewStyle={{ width, marginLeft: 0 }}
+            onPress={() => this.handleSearch(search)}
+          />}
         <ButtonGroup
           onPress={index => this.handleSearch(searchItems[index])}
           selectedIndex={searchItems.indexOf(query)}

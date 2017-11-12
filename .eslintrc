@@ -11,6 +11,7 @@
     "class-methods-use-this": "off",
     "react/forbid-prop-types": "off",
     "react/no-array-index-key": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "import/no-unresolved": "off"
   }
 }
