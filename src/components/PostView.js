@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
+import HTMLView from 'react-native-htmlview';
 
 import Footer from './Footer';
 
@@ -90,7 +91,15 @@ const PostView = ({ navigation, handleSearch }) => {
           ))
         }
       </View>
-      <Text style={styles.description}>{description}</Text>
+
+      <View style={styles.description}>
+        <HTMLView
+          value={description}
+          stylesheet={styles}
+          onLinkPress={linkAddress => navigation.navigate('Web', { url: linkAddress })}
+        />
+      </View>
+
       <View style={styles.buttonContainer}>
         <Button
           title="APPLY NOW"
