@@ -45,9 +45,13 @@ const styles = StyleSheet.create({
   results: {
     fontWeight: '500',
   },
+  buttonText: {
+    fontSize: 10,
+    textAlign: 'center',
+  },
 });
 
-const searchItems = ['', 'dev', 'design', 'non tech'];
+const searchItems = ['', 'dev', 'support', 'marketing', 'design'];
 
 class Layout extends React.Component {
   state = {
@@ -87,7 +91,7 @@ class Layout extends React.Component {
     const { searchResults, loading } = this.props;
     const { jobs, query = '' } = searchResults;
     const { search, width } = this.state;
-    const buttons = ['all jobs', 'dev jobs', 'design/UX', 'non-tech'];
+    const buttons = ['all jobs', 'software development', 'customer support', 'marketing', 'design & UI'];
 
     return (
       <ScrollView
@@ -113,6 +117,7 @@ class Layout extends React.Component {
           onPress={index => this.handleSearch(searchItems[index])}
           selectedIndex={searchItems.indexOf(query)}
           buttons={buttons}
+          textStyle={styles.buttonText}
         />
         {
           !loading && !!jobs.length &&
