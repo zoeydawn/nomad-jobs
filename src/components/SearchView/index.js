@@ -104,8 +104,9 @@ class Layout extends React.Component {
         <SearchBar
           round
           icon={{ style: styles.searchIcon }}
+          clearIcon
           containerStyle={styles.searchContainer}
-          showLoadingIcon={false}
+          showLoadingIcon={loading}
           onChangeText={this.handleType}
           placeholder="Search remote jobs..."
         />
