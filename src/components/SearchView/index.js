@@ -6,6 +6,7 @@ import { SearchBar, ButtonGroup, Button } from 'react-native-elements';
 import GiftedSpinner from 'react-native-gifted-spinner';
 
 import JobList from './JobList';
+import Footer from '../Footer';
 
 import { requestJobs, toggleLoading } from '../../actions';
 
@@ -84,7 +85,7 @@ class Layout extends React.Component {
   }
 
   render() {
-    const { searchResults, loading } = this.props;
+    const { searchResults, loading, navigation } = this.props;
     const { jobs, query = '' } = searchResults;
     const { search, width } = this.state;
     const buttons = [
@@ -145,6 +146,7 @@ class Layout extends React.Component {
               /> :
               <Text style={styles.noMatches}>no matches found</Text>
         }
+        <Footer navigate={navigation.navigate} />
       </ScrollView>
     );
   }

@@ -11,6 +11,8 @@ import {
 import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
 
+import Footer from './Footer';
+
 import { requestJobs, toggleLoading } from '../actions';
 
 const styles = StyleSheet.create({
@@ -39,6 +41,7 @@ const styles = StyleSheet.create({
   },
   link: {
     marginTop: 15,
+    marginBottom: 15,
   },
   linkText: {
     color: 'blue',
@@ -99,6 +102,7 @@ const PostView = ({ navigation, handleSearch }) => {
         >
           <NativeText style={styles.linkText}>view on remoteOK.io</NativeText>
         </TouchableHighlight>
+        <Footer navigate={navigation.navigate} />
       </View>
     </ScrollView>
   );
