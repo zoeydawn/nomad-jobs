@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableHighlight,
   Text as NativeText,
+  Linking,
 } from 'react-native';
 import { Button, Badge, Text } from 'react-native-elements';
 import moment from 'moment';
@@ -96,7 +97,16 @@ const PostView = ({ navigation, handleSearch }) => {
         <HTMLView
           value={description}
           stylesheet={styles}
-          onLinkPress={linkAddress => navigation.navigate('Web', { url: linkAddress })}
+          onLinkPress={
+            (linkAddress) => {
+              if (linkAddress.indexOf('@') === -1) {
+                navigation.navigate('Web', { url: linkAddress });
+              } else {
+                Linking.openURL(linkAddress)
+                  .catch(err => console.error('An opening email client', err));
+              }
+            }
+          }
         />
       </View>
 
